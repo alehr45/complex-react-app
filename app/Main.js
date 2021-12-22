@@ -4,7 +4,7 @@ import ReactDOM from "react-dom"
 function ExampleComponent() {
   return (
     <div>
-      <h1>This is our app!!!</h1>
+      <h1>This is our app!</h1>
       <p>The sky is blue and the grass is green.</p>
     </div>
   )
