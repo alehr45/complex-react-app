@@ -1,6 +1,5 @@
 import React from "react"
 import ReactDOM from "react-dom"
-// In react-router-dom v6 'Switch' is replaced by 'Routes'
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Header from "./components/Header"
 import HomeGuest from "./components/HomeGuest"
