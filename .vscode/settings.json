@@ -1,3 +1,4 @@
 {
-  "cSpell.ignoreWords": ["complexapp"]
+  "cSpell.ignoreWords": ["complexapp"],
+  "git.ignoreLimitWarning": true
 }
