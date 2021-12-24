@@ -1,4 +1,5 @@
 import React, { useEffect } from "react"
+//Components
 import Page from "./Page"
 
 function ViewSinglePost() {
