@@ -6,6 +6,7 @@ Axios.defaults.baseURL = "http://localhost:8080"
 //Context Files
 import StateContext from "./StateContext"
 import DispatchContext from "./DispatchContext"
+import FlashMessages from "./components/FlashMessages"
 //Components
 import Home from "./components/Home"
 import Header from "./components/Header"
@@ -16,7 +17,7 @@ import Terms from "./components/Terms"
 import CreatePost from "./components/CreatePost"
 import Axios from "axios"
 import ViewSinglePost from "./components/ViewSinglePost"
-import FlashMessages from "./components/FlashMessages"
+import Profile from "./components/Profile"
 
 function Main() {
   const initialState = {
@@ -66,6 +67,7 @@ function Main() {
           <Header />
           <Routes>
             <Route path="/" element={state.loggedIn ? <Home /> : <HomeGuest />} />
+            <Route path="/profile/:username" element={<Profile />} />
             <Route path="/about-us" element={<About />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/post/:id" element={<ViewSinglePost />} />
