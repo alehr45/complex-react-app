@@ -18,6 +18,7 @@ import CreatePost from "./components/CreatePost"
 import Axios from "axios"
 import ViewSinglePost from "./components/ViewSinglePost"
 import Profile from "./components/Profile"
+import EditPost from "./components/EditPost"
 
 function Main() {
   const initialState = {
@@ -71,6 +72,7 @@ function Main() {
             <Route path="/about-us" element={<About />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/post/:id" element={<ViewSinglePost />} />
+            <Route path="/post/:id/edit" exact element={<EditPost />} />
             <Route path="/create-post" element={<CreatePost />} />
           </Routes>
           <Footer />
