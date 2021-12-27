@@ -1,11 +1,10 @@
-import React, { useEffect, useState, useContext } from "react"
+import React, { useState, useContext } from "react"
 import Axios from "axios"
 import { useNavigate } from "react-router-dom"
 //Components
 import Page from "./Page"
 import DispatchContext from "../DispatchContext"
 import StateContext from "../StateContext"
-import FlashMessages from "./FlashMessages"
 
 function CreatePost(props) {
   const navigate = useNavigate()

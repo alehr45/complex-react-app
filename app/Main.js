@@ -19,6 +19,7 @@ import Axios from "axios"
 import ViewSinglePost from "./components/ViewSinglePost"
 import Profile from "./components/Profile"
 import EditPost from "./components/EditPost"
+import NotFound from "./components/NotFound"
 
 function Main() {
   const initialState = {
@@ -74,6 +75,7 @@ function Main() {
             <Route path="/post/:id" element={<ViewSinglePost />} />
             <Route path="/post/:id/edit" exact element={<EditPost />} />
             <Route path="/create-post" element={<CreatePost />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
           <Footer />
         </BrowserRouter>
