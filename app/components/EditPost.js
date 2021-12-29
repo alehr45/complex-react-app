@@ -97,7 +97,7 @@ function EditPost(props) {
           if (appState.user.username != response.data.author.username) {
             appDispatch({ type: "flashMessage", value: "You do not have permission to edit that post." })
             //Redirect to homepage
-            navigate("/")
+            navigate("`/post/${response.data}`")
           }
         } else {
           dispatch({ type: "notFound" })
