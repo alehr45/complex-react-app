@@ -21,7 +21,6 @@ function ViewSinglePost() {
 
   useEffect(() => {
     const ourRequest = Axios.CancelToken.source()
-
     async function fetchPost() {
       try {
         const response = await Axios.get(`/post/${id}`, { cancelToken: ourRequest.token })
@@ -35,7 +34,7 @@ function ViewSinglePost() {
     return () => {
       ourRequest.cancel()
     }
-  }, [])
+  }, [id])
 
   if (!isLoading && !post) {
     return <NotFound />
