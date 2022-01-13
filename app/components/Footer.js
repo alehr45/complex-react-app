@@ -18,9 +18,9 @@ function Footer() {
         </Link>
       </p>
       <p className="m-0">
-        Copyright &copy; 2020{" "}
+        Copyright &copy; 2022{" "}
         <a to="/" className="text-muted">
-          ComplexApp
+          ChatVibe
         </a>
         . All rights reserved.
       </p>
