@@ -1,12 +1,11 @@
 import React, { useEffect, useContext } from "react"
+import Page from "./Page"
 import StateContext from "../StateContext"
 import { useImmer } from "use-immer"
+import LoadingDotsIcon from "./LoadingDotsIcon"
 import Axios from "axios"
 import { Link } from "react-router-dom"
-//Components
-import Page from "./Page"
 import Post from "./Post"
-import LoadingDotsIcon from "./LoadingDotsIcon"
 
 function Home() {
   const appState = useContext(StateContext)
@@ -17,6 +16,7 @@ function Home() {
 
   useEffect(() => {
     const ourRequest = Axios.CancelToken.source()
+
     async function fetchData() {
       try {
         const response = await Axios.post("/getHomeFeed", { token: appState.user.token }, { cancelToken: ourRequest.token })

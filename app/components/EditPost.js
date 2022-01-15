@@ -1,13 +1,11 @@
-import React, { useEffect, useContext } from "react"
+import React, { useEffect, useState, useContext } from "react"
+import { useImmerReducer } from "use-immer"
+import Page from "./Page"
 import { useParams, Link, useNavigate } from "react-router-dom"
 import Axios from "axios"
-import { useImmerReducer } from "use-immer"
-//Context Files
+import LoadingDotsIcon from "./LoadingDotsIcon"
 import StateContext from "../StateContext"
 import DispatchContext from "../DispatchContext"
-//Components
-import Page from "./Page"
-import LoadingDotsIcon from "./LoadingDotsIcon"
 import NotFound from "./NotFound"
 
 function EditPost(props) {
@@ -15,7 +13,7 @@ function EditPost(props) {
   const appState = useContext(StateContext)
   const appDispatch = useContext(DispatchContext)
 
-  const initialState = {
+  const originalState = {
     title: {
       value: "",
       hasErrors: false,
@@ -41,12 +39,12 @@ function EditPost(props) {
         draft.isFetching = false
         return
       case "titleChange":
-        draft.title.value = action.value
         draft.title.hasErrors = false
+        draft.title.value = action.value
         return
       case "bodyChange":
-        draft.body.value = action.value
         draft.body.hasErrors = false
+        draft.body.value = action.value
         return
       case "submitRequest":
         if (!draft.title.hasErrors && !draft.body.hasErrors) {
@@ -77,7 +75,7 @@ function EditPost(props) {
     }
   }
 
-  const [state, dispatch] = useImmerReducer(ourReducer, initialState)
+  const [state, dispatch] = useImmerReducer(ourReducer, originalState)
 
   function submitHandler(e) {
     e.preventDefault()
@@ -88,7 +86,6 @@ function EditPost(props) {
 
   useEffect(() => {
     const ourRequest = Axios.CancelToken.source()
-
     async function fetchPost() {
       try {
         const response = await Axios.get(`/post/${state.id}`, { cancelToken: ourRequest.token })
@@ -96,14 +93,14 @@ function EditPost(props) {
           dispatch({ type: "fetchComplete", value: response.data })
           if (appState.user.username != response.data.author.username) {
             appDispatch({ type: "flashMessage", value: "You do not have permission to edit that post." })
-            //Redirect to homepage
-            navigate("`/post/${response.data}`")
+            // redirect to homepage
+            navigate("/")
           }
         } else {
           dispatch({ type: "notFound" })
         }
       } catch (e) {
-        console.log("There was a problem or the request was canceled.")
+        console.log("There was a problem or the request was cancelled.")
       }
     }
     fetchPost()
@@ -114,15 +111,15 @@ function EditPost(props) {
 
   useEffect(() => {
     if (state.sendCount) {
-      const ourRequest = Axios.CancelToken.source()
       dispatch({ type: "saveRequestStarted" })
+      const ourRequest = Axios.CancelToken.source()
       async function fetchPost() {
         try {
           const response = await Axios.post(`/post/${state.id}/edit`, { title: state.title.value, body: state.body.value, token: appState.user.token }, { cancelToken: ourRequest.token })
           dispatch({ type: "saveRequestFinished" })
           appDispatch({ type: "flashMessage", value: "Post was updated." })
         } catch (e) {
-          console.log("There was a problem or the request was canceled.")
+          console.log("There was a problem or the request was cancelled.")
         }
       }
       fetchPost()
@@ -144,10 +141,11 @@ function EditPost(props) {
     )
 
   return (
-    <Page title="Create New Post">
-      <Link to={`/post/${state.id}`} className="small font-weight-bold">
-        &laquo; Back to viewing post
+    <Page title="Edit Post">
+      <Link className="small font-weight-bold" to={`/post/${state.id}`}>
+        &laquo; Back to post permalink
       </Link>
+
       <form className="mt-3" onSubmit={submitHandler}>
         <div className="form-group">
           <label htmlFor="post-title" className="text-muted mb-1">
@@ -161,12 +159,12 @@ function EditPost(props) {
           <label htmlFor="post-body" className="text-muted mb-1 d-block">
             <small>Body Content</small>
           </label>
-          <textarea onBlur={e => dispatch({ type: "bodyRules", value: e.target.value })} onChange={e => dispatch({ type: "bodyChange", value: e.target.value })} value={state.body.value} name="body" id="post-body" className="body-content tall-textarea form-control" type="text" />
+          <textarea onBlur={e => dispatch({ type: "bodyRules", value: e.target.value })} onChange={e => dispatch({ type: "bodyChange", value: e.target.value })} name="body" id="post-body" className="body-content tall-textarea form-control" type="text" value={state.body.value} />
           {state.body.hasErrors && <div className="alert alert-danger small liveValidateMessage">{state.body.message}</div>}
         </div>
 
-        <button disabled={state.isSaving} className="btn btn-primary">
-          {!state.isSaving ? "Save Updates" : "Saving..."}
+        <button className="btn btn-primary" disabled={state.isSaving}>
+          Save Updates
         </button>
       </form>
     </Page>

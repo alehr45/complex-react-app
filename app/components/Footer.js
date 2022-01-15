@@ -18,8 +18,8 @@ function Footer() {
         </Link>
       </p>
       <p className="m-0">
-        Copyright &copy; 2022{" "}
-        <a to="/" className="text-muted">
+        Copyright &copy; 2020{" "}
+        <a href="/" className="text-muted">
           ChatVibe
         </a>
         . All rights reserved.

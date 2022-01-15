@@ -1,11 +1,9 @@
 import React, { useEffect, useContext, useRef } from "react"
-import { Link } from "react-router-dom"
-import { useImmer } from "use-immer"
-import io from "socket.io-client"
-//Context Files
 import StateContext from "../StateContext"
 import DispatchContext from "../DispatchContext"
-//Chat Server
+import { useImmer } from "use-immer"
+import { Link } from "react-router-dom"
+import io from "socket.io-client"
 
 function Chat() {
   const socket = useRef(null)
@@ -15,7 +13,7 @@ function Chat() {
   const appDispatch = useContext(DispatchContext)
   const [state, setState] = useImmer({
     fieldValue: "",
-    chatMessages: []
+    chatMessages: [],
   })
 
   useEffect(() => {
@@ -26,13 +24,14 @@ function Chat() {
   }, [appState.isChatOpen])
 
   useEffect(() => {
-    socket.current = io(process.env.BACKENDURL || "https://chat-vibe-45.herokuapp.com")
+    socket.current = io(process.env.BACKENDURL || "your heroku dot com goes here")
 
-    socket.current.on("chatFromServer", message => {
-      setState(draft => {
+    socket.current.on("chatFromServer", (message) => {
+      setState((draft) => {
         draft.chatMessages.push(message)
       })
     })
+
     return () => socket.current.disconnect()
   }, [])
 
@@ -45,18 +44,18 @@ function Chat() {
 
   function handleFieldChange(e) {
     const value = e.target.value
-    setState(draft => {
+    setState((draft) => {
       draft.fieldValue = value
     })
   }
 
   function handleSubmit(e) {
     e.preventDefault()
-    //Send message to chat server
+    // Send message to chat server
     socket.current.emit("chatFromBrowser", { message: state.fieldValue, token: appState.user.token })
 
-    setState(draft => {
-      //Add message to state collection of messages
+    setState((draft) => {
+      // Add message to state collection of messages
       draft.chatMessages.push({ message: draft.fieldValue, username: appState.user.username, avatar: appState.user.avatar })
       draft.fieldValue = ""
     })
@@ -82,6 +81,7 @@ function Chat() {
               </div>
             )
           }
+
           return (
             <div key={index} className="chat-other">
               <Link to={`/profile/${message.username}`}>
@@ -89,7 +89,7 @@ function Chat() {
               </Link>
               <div className="chat-message">
                 <div className="chat-message-inner">
-                  <Link to={`profile/${message.username}`}>
+                  <Link to={`/profile/${message.username}`}>
                     <strong>{message.username}: </strong>
                   </Link>
                   {message.message}
@@ -100,7 +100,7 @@ function Chat() {
         })}
       </div>
       <form onSubmit={handleSubmit} id="chatForm" className="chat-form border-top">
-        <input onChange={handleFieldChange} ref={chatField} value={state.fieldValue} type="text" className="chat-field" id="chatField" placeholder="Type a message…" autoComplete="off" />
+        <input value={state.fieldValue} onChange={handleFieldChange} ref={chatField} type="text" className="chat-field" id="chatField" placeholder="Type a message…" autoComplete="off" />
       </form>
     </div>
   )
