@@ -1,7 +1,7 @@
 import React, { useState, useReducer, useEffect, Suspense } from "react"
 import ReactDOM from "react-dom"
 import { useImmerReducer } from "use-immer"
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import {BrowserRouter, Routes, Route} from "react-router-dom"
 import { CSSTransition } from "react-transition-group"
 import Axios from "axios"
 Axios.defaults.baseURL = process.env.BACKENDURL || "your heroku dot com goes here"
@@ -114,16 +114,16 @@ function Main() {
           <FlashMessages messages={state.flashMessages} />
           <Header />
           <Suspense fallback={<LoadingDotsIcon />}>
-          <Routes>
-            <Route path="/profile/:username/*" element={<Profile />} />
-            <Route path="/" element={<>{state.loggedIn ? <Home /> : <HomeGuest />}</>} />
-            <Route path="/post/:id" element={<ViewSinglePost />} />
-            <Route path="/post/:id/edit" element={<EditPost />} />
-            <Route path="/create-post" element={<CreatePost />} />
-            <Route path="/about-us" element={<About />} />
-            <Route path="/terms" element={<Terms />} />
-            <Route element={<NotFound />} />
-          </Routes>
+            <Routes>
+              <Route path="/profile/:username/*" element={<Profile />} />
+              <Route path="/" element={state.loggedIn ? <Home /> : <HomeGuest />} />
+              <Route path="/post/:id" element={<ViewSinglePost />} />
+              <Route path="/post/:id/edit" element={<EditPost />} />
+              <Route path="/create-post" element={<CreatePost />} />
+              <Route path="/about-us" element={<About />} />
+              <Route path="/terms" element={<Terms />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
           </Suspense>
           <CSSTransition timeout={330} in={state.isSearchOpen} classNames="search-overlay" unmountOnExit>
             <div className="search-overlay">
