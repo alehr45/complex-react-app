@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { CSSTransition } from "react-transition-group"
 //Axios
 import Axios from "axios"
-Axios.defaults.baseURL = process.env.BACKENDURL || "http://chat-vibe.herokuapp.com"
+Axios.defaults.baseURL = process.env.BACKENDURL || "https://chat-vibe.herokuapp.com"
 //Context Files
 import StateContext from "./StateContext"
 import DispatchContext from "./DispatchContext"

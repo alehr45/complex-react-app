@@ -26,7 +26,7 @@ function Chat() {
   }, [appState.isChatOpen])
 
   useEffect(() => {
-    socket.current = io(process.env.BACKENDURL || "http://chat-vibe.herokuapp.com")
+    socket.current = io(process.env.BACKENDURL || "https://chat-vibe.herokuapp.com")
 
     socket.current.on("chatFromServer", message => {
       setState(draft => {
