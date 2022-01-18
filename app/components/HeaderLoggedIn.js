@@ -1,8 +1,10 @@
-import React, { useEffect, useContext } from "react"
+import React, { useContext } from "react"
 import { Link } from "react-router-dom"
+import ReactTooltip from "react-tooltip"
+
+//Components
 import DispatchContext from "../DispatchContext"
 import StateContext from "../StateContext"
-import ReactTooltip from "react-tooltip"
 
 function HeaderLoggedIn(props) {
   const appDispatch = useContext(DispatchContext)
@@ -10,7 +12,7 @@ function HeaderLoggedIn(props) {
 
   function handleLogout() {
     appDispatch({ type: "logout" })
-    appDispatch({ type: "flashMessage", value: "You have successfully logged out." })
+    appDispatch({ type: "flashMessage", value: "You have successfully logged out. " })
   }
 
   function handleSearchIcon(e) {
@@ -36,9 +38,11 @@ function HeaderLoggedIn(props) {
       <Link className="btn btn-sm btn-success mr-2" to="/create-post">
         Create Post
       </Link>{" "}
-      <button onClick={handleLogout} className="btn btn-sm btn-secondary">
-        Sign Out
-      </button>
+      <Link to="/">
+        <button onClick={handleLogout} className="btn btn-sm btn-secondary">
+          Sign Out
+        </button>
+      </Link>
     </div>
   )
 }

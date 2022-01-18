@@ -1,32 +1,33 @@
 import React, { useEffect, useState, useContext } from "react"
-import Page from "./Page"
 import { useParams, Link, useNavigate } from "react-router-dom"
 import Axios from "axios"
-import LoadingDotsIcon from "./LoadingDotsIcon"
 import ReactMarkdown from "react-markdown"
 import ReactTooltip from "react-tooltip"
-import NotFound from "./NotFound"
-import StateContext from "../StateContext"
+//Context Files
 import DispatchContext from "../DispatchContext"
+import StateContext from "../StateContext"
+//Components
+import Page from "./Page"
+import LoadingDotsIcon from "./LoadingDotsIcon"
+import NotFound from "./NotFound"
 
-function ViewSinglePost(props) {
-  const navigate = useNavigate()
-  const appState = useContext(StateContext)
-  const appDispatch = useContext(DispatchContext)
+function ViewSinglePost() {
   const { id } = useParams()
   const [isLoading, setIsLoading] = useState(true)
   const [post, setPost] = useState()
+  const appState = useContext(StateContext)
+  const appDispatch = useContext(DispatchContext)
+  const navigate = useNavigate()
 
   useEffect(() => {
     const ourRequest = Axios.CancelToken.source()
-
     async function fetchPost() {
       try {
         const response = await Axios.get(`/post/${id}`, { cancelToken: ourRequest.token })
         setPost(response.data)
         setIsLoading(false)
       } catch (e) {
-        console.log("There was a problem or the request was cancelled.")
+        console.log("There was a problem or the request was canceled.")
       }
     }
     fetchPost()
@@ -47,7 +48,7 @@ function ViewSinglePost(props) {
     )
 
   const date = new Date(post.createdDate)
-  const dateFormatted = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
+  const dateFormatted = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()} `
 
   function isOwner() {
     if (appState.loggedIn) {
@@ -62,10 +63,8 @@ function ViewSinglePost(props) {
       try {
         const response = await Axios.delete(`/post/${id}`, { data: { token: appState.user.token } })
         if (response.data == "Success") {
-          // 1. display a flash message
           appDispatch({ type: "flashMessage", value: "Post was successfully deleted." })
 
-          // 2. redirect back to the current user's profile
           navigate(`/profile/${appState.user.username}`)
         }
       } catch (e) {
@@ -100,7 +99,7 @@ function ViewSinglePost(props) {
       </p>
 
       <div className="body-content">
-      <ReactMarkdown children={post.body} allowedElements={["p", "br", "strong", "em", "h1", "h2", "h3", "h4", "h5", "h6", "ul", "ol", "li"]} />
+        <ReactMarkdown children={post.body} allowedTypes={["paragraph", "strong", "emphasis", "heading", "list", "listItem"]} />
       </div>
     </Page>
   )

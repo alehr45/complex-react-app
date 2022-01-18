@@ -63,11 +63,8 @@ if (currentTask == "webpackDev" || currentTask == "dev") {
   config.devtool = "source-map"
   config.devServer = {
     port: 3000,
-    static: {
-      directory: path.join(__dirname, "app")
-    },
+    contentBase: path.join(__dirname, "app"),
     hot: true,
-    liveReload: false,
     historyApiFallback: { index: "index.html" }
   }
 }
