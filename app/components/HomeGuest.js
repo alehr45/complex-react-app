@@ -50,7 +50,7 @@ function HomeGuest() {
           draft.username.hasErrors = true
           draft.username.message = "Username must be at least 3 characters."
         }
-        if (!draft.username.hasErrors && !action.noRequest) {
+        if (!draft.hasErrors && !action.noRequest) {
           draft.username.checkCount++
         }
         return

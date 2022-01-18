@@ -125,7 +125,7 @@ function Profile() {
       </h2>
 
       <div className="profile-nav nav nav-tabs pt-2 mb-4">
-        <NavLink to="" end className="nav-item nav-link">
+      <NavLink to="" end className="nav-item nav-link">
           Posts: {state.profileData.counts.postCount}
         </NavLink>
         <NavLink to="followers" className="nav-item nav-link">

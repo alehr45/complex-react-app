@@ -1,14 +1,14 @@
 import React, { useEffect, useState, useContext } from "react"
-import { useNavigate } from 'react-router-dom'
 import Page from "./Page"
 import Axios from "axios"
+import { useNavigate } from "react-router-dom"
 import DispatchContext from "../DispatchContext"
 import StateContext from "../StateContext"
 
 function CreatePost(props) {
+  const navigate = useNavigate()
   const [title, setTitle] = useState()
   const [body, setBody] = useState()
-  const navigate = useNavigate()
   const appDispatch = useContext(DispatchContext)
   const appState = useContext(StateContext)
 

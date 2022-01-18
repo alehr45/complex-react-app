@@ -4,7 +4,7 @@ import { useImmerReducer } from "use-immer"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { CSSTransition } from "react-transition-group"
 import Axios from "axios"
-Axios.defaults.baseURL = process.env.BACKENDURL || "https://chat-vibe-45.herokuapp.com"
+Axios.defaults.baseURL = process.env.BACKENDURL || "https://chat-vibe-45.herokuapp.com/"
 
 import StateContext from "./StateContext"
 import DispatchContext from "./DispatchContext"
@@ -116,13 +116,13 @@ function Main() {
           <Suspense fallback={<LoadingDotsIcon />}>
             <Routes>
               <Route path="/profile/:username/*" element={<Profile />} />
-              <Route path="/" element={state.loggedIn ? <Home /> : <HomeGuest />} />
+              <Route path="/" element={<>{state.loggedIn ? <Home /> : <HomeGuest />}</>} />
               <Route path="/post/:id" element={<ViewSinglePost />} />
               <Route path="/post/:id/edit" element={<EditPost />} />
               <Route path="/create-post" element={<CreatePost />} />
               <Route path="/about-us" element={<About />} />
               <Route path="/terms" element={<Terms />} />
-              <Route path="*" element={<NotFound />} />
+              <Route element={<NotFound />} />
             </Routes>
           </Suspense>
           <CSSTransition timeout={330} in={state.isSearchOpen} classNames="search-overlay" unmountOnExit>
