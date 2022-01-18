@@ -1,7 +1,7 @@
 import React, { useState, useReducer, useEffect, Suspense } from "react"
 import ReactDOM from "react-dom"
 import { useImmerReducer } from "use-immer"
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { BrowserRouter, Routes, Route } from "react-router-dom/server"
 import { CSSTransition } from "react-transition-group"
 import Axios from "axios"
 Axios.defaults.baseURL = process.env.BACKENDURL || "https://chat-vibe.herokuapp.com"
