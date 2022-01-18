@@ -99,7 +99,7 @@ function ViewSinglePost() {
       </p>
 
       <div className="body-content">
-        <ReactMarkdown children={post.body} allowedTypes={["paragraph", "strong", "emphasis", "heading", "list", "listItem"]} />
+        <ReactMarkdown children={post.body} allowedElements={["p", "br", "strong", "em", "h1", "h2", "h3", "h4", "h5", "h6", "ul", "ol", "li"]} />
       </div>
     </Page>
   )
